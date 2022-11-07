@@ -61,7 +61,7 @@ body {
   border-width: 2px;
   border-style: solid;
   border-radius: 10px;
-  padding-left: 10%;
+  /* padding-left: 10%; */
   padding-top: 5%;
   padding-bottom: 5%;
   height:70%;
@@ -72,6 +72,16 @@ body {
 #edit-toolbar {
   background-color: transparent;
   float: right;
+}
+
+#playlister-statusbar {
+	bottom: 6%;
+	position: fixed;
+	background-color: aliceblue;
+	/* justify-content: center; */
+	/* display: grid; */
+	text-align: center;
+	width: 80%;
 }
 
 .top5-button,
@@ -127,9 +137,9 @@ body {
 
 #list-selector-heading {
   position: absolute;
-  left: 0%;
   top: 0%;
-  width: 100%;
+  left: 25%;
+  width: 50%;
   height: 10%;
   text-align: center;
   font-size: 24pt;
