@@ -53,7 +53,7 @@ function AuthContextProvider(props) {
             case AuthActionType.SET_LOGGED_IN: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: true, //dc should this switch to payload.loggedIn?
+                    loggedIn: payload.loggedIn,
                     errorMessage: null,
                 });
             }
