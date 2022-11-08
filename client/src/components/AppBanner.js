@@ -50,8 +50,8 @@ export default function AppBanner() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}><Link to='/login/'>Login</Link></MenuItem>
-            <MenuItem onClick={handleMenuClose}><Link to='/register/'>Create New Account</Link></MenuItem>
+            <Link to='/login/'><MenuItem onClick={handleMenuClose}>Login</MenuItem></Link>
+            <Link to='/register/'><MenuItem onClick={handleMenuClose}>Create New Account</MenuItem></Link>
         </Menu>
     );
     const loggedInMenu = 
@@ -91,6 +91,10 @@ export default function AppBanner() {
             return <AccountCircle />;
     }
 
+    function clearTPS() {
+        store.clearTransactions();
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -101,7 +105,7 @@ export default function AppBanner() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}                        
                     >
-                        <Link style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link>
+                        <Link style={{ textDecoration: 'none', color: 'white' }} onClick={clearTPS} to='/'>⌂</Link>
                     </Typography>
                     <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

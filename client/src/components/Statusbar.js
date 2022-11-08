@@ -1,6 +1,7 @@
-import { useContext } from 'react'
-import { GlobalStoreContext } from '../store'
-import { Typography } from '@mui/material'
+import { useContext } from "react";
+import { GlobalStoreContext } from "../store";
+import { Typography } from "@mui/material";
+import AuthContext from "../auth";
 
 /*
     Our Status bar React component goes at the bottom of our UI.
@@ -9,9 +10,9 @@ import { Typography } from '@mui/material'
 */
 function Statusbar() {
     const { store } = useContext(GlobalStoreContext);
-    let text ="";
-    if (store.currentList)
-        text = store.currentList.name;
+    const { auth } = useContext(AuthContext);
+    let text = "";
+    if (auth.loggedIn && store.currentList) text = store.currentList.name;
     return (
         <div id="playlister-statusbar">
             <Typography variant="h4">{text}</Typography>

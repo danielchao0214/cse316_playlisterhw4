@@ -25,6 +25,12 @@ createPlaylist = (req, res) => {
     }
 
     User.findOne({ _id: req.userId }, (err, user) => {
+        if (user.email !== body.ownerEmail) {
+            return res.status(400).json({
+                errorMessage: "not authorized",
+            });
+        }
+
         console.log("user found: " + JSON.stringify(user));
         user.playlists.push(playlist._id);
         user.save().then(() => {
@@ -61,16 +67,24 @@ deletePlaylist = async (req, res) => {
                 console.log("req.userId: " + req.userId);
                 if (user._id == req.userId) {
                     console.log("correct user!");
-                    Playlist.findOneAndDelete({ _id: req.params.id }, () => {
-                        return res.status(200).json({
-                            success: true,
-                            message: "Playlist deleted",
-                        });
-                    }).catch((err) => {
-                        console.log(err);
-                        return res.status(400).json({
-                            error,
-                            message: "Playlist NOT deleted",
+                    user.playlists = user.playlists.filter(
+                        (id) => String(id) !== req.params.id
+                    );
+                    user.save().then(() => {
+                        Playlist.findOneAndDelete(
+                            { _id: req.params.id },
+                            () => {
+                                return res.status(200).json({
+                                    success: true,
+                                    message: "Playlist deleted",
+                                });
+                            }
+                        ).catch((err) => {
+                            console.log(err);
+                            return res.status(400).json({
+                                error,
+                                message: "Playlist NOT deleted",
+                            });
                         });
                     });
                 } else {
@@ -153,7 +167,8 @@ getPlaylistPairs = async (req, res) => {
     }).catch((err) => console.log(err));
 };
 getPlaylists = async (req, res) => {
-    await Playlist.find({}, (err, playlists) => {
+    email = User.findById(id, (err, user)).email;
+    await Playlist.find({ ownerEmail: email }, (err, playlists) => {
         if (err) {
             return res.status(400).json({ success: false, error: err });
         }

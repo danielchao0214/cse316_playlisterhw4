@@ -28,7 +28,7 @@ export default function MUIErrorModal() {
   const { auth } = useContext(AuthContext);
 
   function handleClose(event) {
-    auth.closeErrorModal();
+    auth.closeModal();
   }
 
   let errorMessage = "";
